@@ -62,11 +62,13 @@ public class NormalScoreCalculator implements ScoreCalculator {
 
         Frame nextFrame = frames.get(index + 1);
 
-        List<Integer> scores = new ArrayList<>();
+        if (nextFrame.status == Status.WAITING) {
+            return 0;
+        }
 
-        scores.add(nextFrame.scores().get(0));
+        int firstThrow = nextFrame.scores().get(0);
 
-        return sum(scores);
+        return firstThrow;
     }
 
     public int getNextTwoThrowScores(List<Frame> frames, int index) {
@@ -82,12 +84,20 @@ public class NormalScoreCalculator implements ScoreCalculator {
             scores.add(score);
         }
 
+        if (scores.size() == 3) {
+            scores.remove(2);
+        }
+
         if (scores.size() == 1) {
             if (frames.size() <= index + 2) {
                 return sum(scores);
             }
 
             Frame frameAfterNextFrame = frames.get(index + 2);
+
+            if (frameAfterNextFrame.status == Status.WAITING) {
+                return sum(scores);
+            }
 
             scores.add(frameAfterNextFrame.scores().get(0));
         }

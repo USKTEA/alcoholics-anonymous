@@ -17,6 +17,6 @@ public class Bowling {
             player.throwBall(game);
         }
 
-        System.out.println(game.frames());
+        System.out.println(game.score());
     }
 }

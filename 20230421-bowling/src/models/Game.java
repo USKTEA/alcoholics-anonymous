@@ -67,4 +67,8 @@ public class Game {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    public List<Integer> scorePerFrames() {
+        return scorePerFrames;
+    }
 }

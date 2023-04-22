@@ -117,11 +117,23 @@ class GameTest {
 
     @Test
     void whenGameIsPerfect() {
-        //터진다 
         for (int i = 0; i < 12; i += 1) {
             game.roll(STRIKE);
         }
 
         assertEquals(300, game.score());
+    }
+
+    @Test
+    void whenThrowSpareAtTenthFrame() {
+        for (int i = 0; i < 18; i += 1) {
+            game.roll(0);
+        }
+
+        game.roll(2);
+        game.roll(8);
+        game.roll(10);
+
+        assertEquals(20, game.score());
     }
 }

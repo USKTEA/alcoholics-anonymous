@@ -17,7 +17,7 @@ public class Frame {
         this.number = number;
         this.remainPins = INITIAL_PINS;
         this.scores = new ArrayList<>();
-        this.status = Status.NORMAL;
+        this.status = Status.WAITING;
     }
 
     public Frame(int number, int firstThrow, int secondThrow) {
@@ -57,9 +57,16 @@ public class Frame {
         this.scores.add(pin);
         this.remainPins -= pin;
 
-        if (this.status == Status.NORMAL) {
+        if (this.status == Status.WAITING) {
             checkIsStrike();
             checkIsSpare();
+            checkIsNormal();
+        }
+    }
+
+    private void checkIsNormal() {
+        if (this.scores.size() == 2 && this.status != Status.SPARE) {
+            this.status = Status.NORMAL;
         }
     }
 
@@ -101,6 +108,10 @@ public class Frame {
         return this.status == Status.STRIKE;
     }
 
+    public boolean isSpare() {
+        return this.status == Status.SPARE;
+    }
+
     public List<Integer> scores() {
         return this.scores;
     }
@@ -108,9 +119,5 @@ public class Frame {
     @Override
     public String toString() {
         return "Status:" + status + " / Score:" + scores.stream().mapToInt(Integer::intValue).sum();
-    }
-
-    public boolean isSpare() {
-        return this.status == Status.SPARE;
     }
 }
