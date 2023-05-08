@@ -13,6 +13,9 @@ class TaskRouter {
         path(basePath).nest {
             GET("", handler::list)
             GET("{id}", handler::task)
+            POST("", handler::create)
+            PATCH("", handler::edit)
+            DELETE("{id}", handler::delete)
         }
     }
 }

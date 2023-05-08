@@ -18,4 +18,8 @@ class Task(private var title: String) {
     fun toDto() : TaskDto {
         return TaskDto(id!!, title)
     }
+
+    fun edit(title: String) {
+        this.title = title
+    }
 }
