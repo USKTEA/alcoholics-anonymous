@@ -29,31 +29,31 @@ class WebConfig : WebFluxConfigurer {
         configurer.defaultCodecs().maxInMemorySize(10 * 1024 * 1024)
     }
 
-//    override fun addCorsMappings(registry: CorsRegistry) {
-//        registry
-//            .addMapping("/")
-//            .allowCredentials(false)
-//            .allowedOriginPatterns("*")
-//            .allowedMethods("*")
-//            .maxAge(0)
-//    }
-
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    fun corsFilter(): CorsWebFilter {
-        val config = CorsConfiguration()
-        config.allowCredentials = false
-        config.addAllowedOriginPattern("*")
-        config.addAllowedHeader("*")
-        config.addAllowedMethod("*")
-        config.maxAge = 0L
-
-        val source = UrlBasedCorsConfigurationSource()
-
-        source.registerCorsConfiguration("/", config)
-
-        return CorsWebFilter(source)
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry
+            .addMapping("/")
+            .allowCredentials(false)
+            .allowedOriginPatterns("*")
+            .allowedMethods("*")
+            .maxAge(0)
     }
+
+//    @Bean
+//    @Order(Ordered.HIGHEST_PRECEDENCE)
+//    fun corsFilter(): CorsWebFilter {
+//        val config = CorsConfiguration()
+//        config.allowCredentials = false
+//        config.addAllowedOriginPattern("*")
+//        config.addAllowedHeader("*")
+//        config.addAllowedMethod("*")
+//        config.maxAge = 0L
+//
+//        val source = UrlBasedCorsConfigurationSource()
+//
+//        source.registerCorsConfiguration("/", config)
+//
+//        return CorsWebFilter(source)
+//    }
 
 //    @Bean
 //    fun authenticationFilter(): WebFilter {
