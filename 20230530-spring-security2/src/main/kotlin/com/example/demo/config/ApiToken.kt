@@ -2,13 +2,15 @@ package com.example.demo.config
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 
-class ApiToken : Authentication {
+open class ApiToken(val token: String) : Authentication {
     override fun getName(): String {
         TODO("Not yet implemented")
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+    override fun getAuthorities(): MutableCollection<GrantedAuthority> {
+        return mutableSetOf(SimpleGrantedAuthority("ROLE_ADMIN"))
         TODO("Not yet implemented")
     }
 
