@@ -3,6 +3,8 @@ package com.example.demo.config
 import org.apache.catalina.webresources.TomcatURLStreamHandlerFactory.disable
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -22,35 +24,35 @@ class SecurityConfig: WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedOriginPatterns("*")
-            .allowedMethods("*")
-            .allowedHeaders("*")
-            .allowCredentials(true)
-    }
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+        }
 
-//    @Bean
-//    fun corsFilter(): CorsFilter {
-//        val configuration = CorsConfiguration().apply {
-//            allowCredentials = false
-//            addAllowedOrigin("*")
-//            addAllowedHeader("*")
-//            addAllowedMethod("*")
-//        }
+//        @Bean
+//        fun corsFilter(): CorsFilter {
+//            val configuration = CorsConfiguration().apply {
+//                allowCredentials = false
+//                addAllowedOrigin("*")
+//                addAllowedHeader("*")
+//                addAllowedMethod("*")
+//            }
 //
-//        val source = UrlBasedCorsConfigurationSource().apply {
-//            registerCorsConfiguration("/**", configuration)
-//        }
+//            val source = UrlBasedCorsConfigurationSource().apply {
+//                registerCorsConfiguration("/**", configuration)
+//            }
 //
-//        return CorsFilter(source)
-//    }
+//            return CorsFilter(source)
+//        }
 
-    @Bean
-    fun securityFilter(http: HttpSecurity): SecurityFilterChain {
-        http.addFilterBefore(FriendlyFilter(authenticationManager()), LogoutFilter::class.java)
-            .csrf { disable() }
-            .authorizeHttpRequests { authorizeRequests ->
-                authorizeRequests
-                    .requestMatchers("/users**").authenticated()
-                    .anyRequest().permitAll()
+        @Bean
+        fun securityFilter(http: HttpSecurity): SecurityFilterChain {
+            http.addFilterBefore(FriendlyFilter(authenticationManager()), LogoutFilter::class.java)
+                .csrf { disable() }
+                .cors{ disable() }
+                .authorizeHttpRequests { authorizeRequests ->
+                    authorizeRequests
+                        .anyRequest().authenticated()
             }
 
         return http.build()

@@ -9,8 +9,8 @@ class ApiToken(val token: String) : Authentication {
         return ""
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        if (token === "AdminBearToken") {
+    override fun getAuthorities(): MutableCollection<GrantedAuthority> {
+        if (token == "AdminBearToken") {
             return mutableSetOf(SimpleGrantedAuthority("ROLE_ADMIN"))
         }
 

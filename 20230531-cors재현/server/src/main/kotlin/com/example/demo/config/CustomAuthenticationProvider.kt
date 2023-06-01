@@ -5,9 +5,6 @@ import org.springframework.security.core.Authentication
 
 class CustomAuthenticationProvider : AuthenticationProvider {
     override fun authenticate(authentication: Authentication?): Authentication? {
-        //userDetail 구현
-        println("returning Authentication: $authentication");
-
         return authentication
     }
 
