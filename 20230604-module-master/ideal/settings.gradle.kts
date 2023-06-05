@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "ideal"
-include("application", "admin", "list", "utilities")
+include("application", "admin", "core", "library")
