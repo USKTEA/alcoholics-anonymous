@@ -30,7 +30,7 @@ class ApiToken(val token: String) : Authentication {
     }
 
     override fun isAuthenticated(): Boolean {
-        return true
+        return token == "AdminBearToken"
     }
 
     override fun setAuthenticated(isAuthenticated: Boolean) {
