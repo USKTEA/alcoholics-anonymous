@@ -1,4 +1,4 @@
-package project.structure.application.sample
+package project.structure.application.enpoint.sample
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -8,7 +8,8 @@ import org.springframework.web.reactive.function.server.coRouter
 class SampleRouter {
 
     @Bean
-    fun adminMemberRoute(handler: SampleHandler) = coRouter {
-        GET("/", handler::test)
+    fun sampleRoute(handler: SampleHandler) = coRouter {
+        GET("/sample", handler::test)
+        POST("/sample", handler::create)
     }
 }
