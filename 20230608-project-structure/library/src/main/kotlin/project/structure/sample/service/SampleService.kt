@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import project.structure.sample.Sample
 import project.structure.sample.property.SampleProperties
+import project.structure.sample.renderMessage
 import project.structure.sample.repository.SampleRepository
 import project.structure.sample.service.`interface`.CreateSampleService
 import project.structure.sample.service.`interface`.GetSampleService
@@ -39,21 +40,23 @@ class SampleService(
     @Transactional
     override fun createSample(): SampleMessage {
         if (Objects.isNull(sampleProperties)) {
+            val sample = Sample(
+                commonMessage = key,
+                adminMessage = null,
+                appMessage = null
+            )
+
             println("It's Admin")
 
-            return SampleMessage(
-                common = key,
-                app = null,
-                admin = null
-            )
+            return sample.renderMessage()
          }
 
-        println(sampleProperties?.key)
-
-        return SampleMessage(
-            common = key,
-            app = sampleProperties?.key,
-            admin = null
+        val sample = Sample(
+            commonMessage = key,
+            adminMessage = null,
+            appMessage = sampleProperties?.key
         )
+
+        return sample.renderMessage()
     }
 }
