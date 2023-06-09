@@ -10,5 +10,6 @@ class SampleRouter {
     @Bean
     fun adminMemberRoute(handler: SampleHandler) = coRouter {
         GET("/", handler::test)
+        POST("/sample", handler::create)
     }
 }

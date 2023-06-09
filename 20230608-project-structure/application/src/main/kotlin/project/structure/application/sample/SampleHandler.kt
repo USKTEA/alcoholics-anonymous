@@ -12,7 +12,13 @@ class SampleHandler(
     private val sampleService: SampleService
 ) {
     suspend fun test(request: ServerRequest): ServerResponse {
-        return sampleService.test().let {
+        return sampleService.getSample().let {
+            ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValueAndAwait(it)
+        }
+    }
+
+    suspend fun create(request: ServerRequest): ServerResponse {
+        return sampleService.createSample().let {
             ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValueAndAwait(it)
         }
     }
