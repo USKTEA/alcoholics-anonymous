@@ -5,13 +5,16 @@ import com.oop.sample.sample.dtos.ResultDto
 import com.oop.sample.sample.dtos.ResultRequestDto
 import com.oop.sample.sample.repositories.ResultRepository
 import com.oop.sample.sample.services.ResultService
+import com.oop.sample.sample.utils.Calculable
 import com.oop.sample.sample.utils.Calculator
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.stereotype.Service
 
+@Service
 class ResultServiceImpl(
     private val resultRepository: ResultRepository,
-    private val calculator: Calculator
+    private val calculator: Calculable
 ) : ResultService {
     @Transactional
     override fun getResult(numberId: Long): ResultDto {

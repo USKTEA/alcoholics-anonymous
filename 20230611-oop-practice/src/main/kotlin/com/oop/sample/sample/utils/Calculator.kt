@@ -1,7 +1,10 @@
 package com.oop.sample.sample.utils
 
+import org.springframework.stereotype.Component
+
+@Component
 class Calculator : Calculable {
-    fun calculate(operator: String, firstOperand: Int, secondOperand: Int): Int {
+    override fun calculate(operator: String, firstOperand: Int, secondOperand: Int): Int {
         return when (operator) {
             "+" -> add(firstOperand, secondOperand)
             "-" -> minus(firstOperand, secondOperand)
