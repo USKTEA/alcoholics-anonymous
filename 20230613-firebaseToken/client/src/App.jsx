@@ -1,8 +1,6 @@
-import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
-import { auth, db } from './firebase';
-
 import Homepage from './pages/HomePage';
 import useSampleStore from './hooks/useSampleStore';
+import AuthComponent from './components/AuthComponent';
 
 export default function App() {
   const sampleStore = useSampleStore();
@@ -11,18 +9,9 @@ export default function App() {
     await sampleStore.getBear(bearType);
   };
 
-  signInAnonymously(auth)
-    .then(() => {
-    })
-    .catch((error) => {
-      console.log(error);
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    // ...
-    });
-
   return (
     <div>
+      <AuthComponent />
       <header>
         <nav>
           <ul>
