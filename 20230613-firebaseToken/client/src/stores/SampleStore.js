@@ -5,6 +5,7 @@ const bearApi = {
   home: () => apiService.getHomeBear(),
   user: () => apiService.getUserBear(),
   admin: () => apiService.getAdminBear(),
+  anonymous: () => apiService.getAnonymousBear(),
 };
 
 export default class SampleStore extends Store {

@@ -1,21 +1,21 @@
-import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
-import { useEffect, useState } from 'react';
-import { auth, db } from '../firebase';
+/* eslint-disable import/no-extraneous-dependencies */
+
+import { useState } from 'react';
+import useFirebase from './useFirebase';
 
 export default function useAuth() {
-  const [user, setUser] = useState(auth.currentUser);
+  const [token, setToken] = useState('');
+  const { user } = useFirebase();
 
-  const signInAnonymousUser = async () => {
-    const userCredential = await signInAnonymously(auth);
+  const getIdToken = async () => {
+    const firebaseToken = await user.getIdToken();
 
-    setUser(userCredential.user);
+    setToken(firebaseToken);
   };
 
-  useEffect(() => {
-    if (!user) {
-      signInAnonymousUser();
-    }
-  }, []);
+  if (user) {
+    getIdToken();
+  }
 
-  return { user };
+  return { token };
 }
