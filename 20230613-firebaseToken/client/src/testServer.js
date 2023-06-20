@@ -10,16 +10,19 @@ const server = setupServer(
       { bear: 'homeBear' },
     ),
   )),
-
   rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(
     ctx.json(
       { bear: 'userBear' },
     ),
   )),
-
   rest.get(`${baseUrl}/admins`, async (req, res, ctx) => res(
     ctx.json(
       { bear: 'adminBear' },
+    ),
+  )),
+  rest.get(`${baseUrl}/anonymous`, async (req, res, ctx) => res(
+    ctx.json(
+      { bear: 'anonymousBear' },
     ),
   )),
 );

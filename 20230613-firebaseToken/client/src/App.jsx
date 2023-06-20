@@ -1,33 +1,30 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+import { useEffect } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 import Homepage from './pages/HomePage';
-import useSampleStore from './hooks/useSampleStore';
-import AuthComponent from './components/AuthComponent';
+import Navigator from './components/Navigator';
+import useUserStore from './hooks/useUserStore';
+import LoginForm from './components/LoginForm';
+import useAuth from './hooks/useAuth';
 
 export default function App() {
-  const sampleStore = useSampleStore();
+  const [accessToken, setAccessToken] = useLocalStorage('accessToken');
+  const userStore = useUserStore();
+  const { user } = userStore;
+  const { token } = useAuth();
 
-  const handleClickButton = async (bearType) => {
-    await sampleStore.getBear(bearType);
-  };
+  useEffect(() => {
+    setAccessToken(token);
+  }, [token]);
 
   return (
-    <div>
-      <AuthComponent />
+    <>
       <header>
-        <nav>
-          <ul>
-            <li>
-              <button type="button" onClick={() => handleClickButton('home')}>Home</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => handleClickButton('user')}>User</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => handleClickButton('admin')}>Admin</button>
-            </li>
-          </ul>
-        </nav>
+        <Navigator />
       </header>
       <Homepage />
-    </div>
+      {user ? null : <LoginForm /> }
+    </>
   );
 }

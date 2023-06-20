@@ -45,5 +45,17 @@ describe('SampleStore', () => {
         expect(sampleStore.bear).toBeTruthy();
       });
     });
+
+    context('BearType이 anonymous일 경우', () => {
+      it('AdminBear를 받아온다', async () => {
+        expect(sampleStore.bear).toBeFalsy();
+
+        const bearType = 'anonymous';
+
+        await sampleStore.getBear(bearType);
+
+        expect(sampleStore.bear).toBeTruthy();
+      });
+    });
   });
 });

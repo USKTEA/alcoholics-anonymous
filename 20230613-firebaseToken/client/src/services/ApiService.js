@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-extraneous-dependencies */
 
 import axios from 'axios';
@@ -8,7 +9,20 @@ export default class ApiService {
   constructor() {
     this.instance = axios.create({
       baseURL: baseUrl,
-      headers: { Authorization: 'Bearer AdminBearToken' },
+    });
+
+    this.instance.interceptors.request.use((config) => {
+      if (!config.headers) {
+        return config;
+      }
+
+      const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+
+      return config;
     });
   }
 
@@ -26,6 +40,12 @@ export default class ApiService {
 
   async getAdminBear() {
     const { data } = await this.instance.get('/admins');
+
+    return data;
+  }
+
+  async getAnonymousBear() {
+    const { data } = await this.instance.get('/anonymous');
 
     return data;
   }
