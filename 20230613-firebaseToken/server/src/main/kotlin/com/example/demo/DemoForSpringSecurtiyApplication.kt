@@ -10,4 +10,5 @@ class DemoForSpringSecurtiyApplication
 
 fun main(args: Array<String>) {
 	runApplication<DemoForSpringSecurtiyApplication>(*args)
+
 }
