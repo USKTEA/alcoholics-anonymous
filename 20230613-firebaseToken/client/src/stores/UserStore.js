@@ -6,6 +6,10 @@ export default class UserStore extends Store {
 
     this.user = null;
   }
+
+  login() {
+
+  }
 }
 
 export const userStore = new UserStore();
