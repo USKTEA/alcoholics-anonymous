@@ -46,4 +46,24 @@ class UserDetail(
     fun addAuthority(role: Role) {
         grantedAuthorities.add(SimpleGrantedAuthority(role.toString()))
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as UserDetail
+
+        if (token != other.token) return false
+        if (isAuthenticated != other.isAuthenticated) return false
+        return grantedAuthorities == other.grantedAuthorities
+    }
+
+    override fun hashCode(): Int {
+        var result = token.hashCode()
+        result = 31 * result + isAuthenticated.hashCode()
+        result = 31 * result + grantedAuthorities.hashCode()
+        return result
+    }
+
+
 }
