@@ -1,9 +1,9 @@
-import DownLoadForm from '../components/DownloadForm';
+import Payments from '../components/Payments';
 
 export default function Homepage() {
   return (
     <p>
-      <DownLoadForm />
+      <Payments />
     </p>
   );
 }
