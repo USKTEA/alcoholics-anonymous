@@ -12,10 +12,28 @@ export default class ApiService {
     });
   }
 
-  async getPaymentData() {
-    const { data } = await this.instance.get('/payments/excel');
+  async getPaymentsExcel() {
+    try {
+      const response = await this.instance.get('/payments/excel', {
+        responseType: 'arraybuffer',
+      });
 
-    return data;
+      return {
+        body: response,
+      };
+    } catch (error) {
+      return error.response;
+    }
+  }
+
+  async addPayments() {
+    try {
+      const { data } = await this.instance.get('/payments');
+
+      return data;
+    } catch (error) {
+      return error.response;
+    }
   }
 }
 

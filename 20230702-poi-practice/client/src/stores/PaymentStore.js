@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { apiService } from '../services/ApiService';
 import Store from './Store';
 
@@ -5,13 +6,20 @@ export default class PaymentStore extends Store {
   constructor() {
     super();
 
-    const data = null;
+    this.data = null;
+    this.total = 0;
   }
 
-  async getPaymentData() {
-    const { data } = await apiService.getPaymentData();
+  async getPaymentsExcel() {
+    const data = await apiService.getPaymentsExcel();
 
-    this.data = data;
+    return data;
+  }
+
+  async addPayments() {
+    const data = await apiService.addPayments();
+
+    this.total = data.total;
 
     this.publish();
   }
