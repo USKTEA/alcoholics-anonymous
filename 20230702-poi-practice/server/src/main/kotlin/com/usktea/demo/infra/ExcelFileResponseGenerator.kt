@@ -2,13 +2,14 @@ package com.usktea.demo.infra
 
 import org.springframework.core.io.FileSystemResource
 import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
 import org.springframework.web.servlet.function.ServerResponse
 import java.io.File
 
 class ExcelFileResponseGenerator {
     companion object {
-        suspend fun generate(file: File): ServerResponse {
-            return ServerResponse.ok()
+         fun generate(file: File): ResponseEntity<FileSystemResource> {
+            return ResponseEntity.ok()
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION, "Content-Type")
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.name)
                 .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
