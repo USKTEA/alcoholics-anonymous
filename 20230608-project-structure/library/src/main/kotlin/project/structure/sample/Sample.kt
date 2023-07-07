@@ -9,7 +9,6 @@ import project.structure.sample.view.SampleMessage
 @Entity
 class Sample(
     @Lob
-//    @Type(type = "org.hibernate.type.TextType")
     @Column(columnDefinition = "TEXT")
     var commonMessage: String? = null,
 
@@ -20,7 +19,6 @@ class Sample(
     var appMessage: String? = null,
 
     @Lob
-//    @Type(type = "org.hibernate.type.TextType")
     @Column(columnDefinition = "TEXT")
     var rawContent: String? = null
 ) : BaseEntity()

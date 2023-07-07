@@ -1,7 +1,6 @@
 package project.structure.sample.service
 
 import jakarta.transaction.Transactional
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import project.structure.sample.Sample
@@ -38,7 +37,7 @@ class SampleService(
 
 
     @Transactional
-    override fun createSample(): SampleMessage {
+    override fun createSample(key: String): SampleMessage {
         if (Objects.isNull(sampleProperties)) {
             val sample = Sample(
                 commonMessage = key,

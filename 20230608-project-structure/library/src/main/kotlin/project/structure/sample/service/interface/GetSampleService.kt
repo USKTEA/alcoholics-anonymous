@@ -1,5 +1,5 @@
 package project.structure.sample.service.`interface`
 
 interface GetSampleService {
-    fun getSample() : String
+    fun getSample(): String
 }
