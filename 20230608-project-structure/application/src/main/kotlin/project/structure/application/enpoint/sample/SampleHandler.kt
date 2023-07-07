@@ -20,6 +20,7 @@ class SampleHandler(
     }
 
     suspend fun create(request: ServerRequest): ServerResponse {
+
         val key = infraSomething.key()
 
         return sampleService.createSample(key).let {

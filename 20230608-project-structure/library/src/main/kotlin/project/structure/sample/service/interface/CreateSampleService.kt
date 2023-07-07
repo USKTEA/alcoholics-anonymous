@@ -4,5 +4,4 @@ import project.structure.sample.view.SampleMessage
 
 interface CreateSampleService {
     fun createSample(key: String): SampleMessage
-    fun createSample(): SampleMessage
 }

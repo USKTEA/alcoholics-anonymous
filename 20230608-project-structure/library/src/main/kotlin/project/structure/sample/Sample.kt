@@ -26,5 +26,5 @@ class Sample(
 fun Sample.renderMessage() = SampleMessage(
     common = commonMessage,
     admin = adminMessage,
-    app = appMessage,
+    app = appMessage
 )
