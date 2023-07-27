@@ -20,3 +20,4 @@ data class NameIsbnVO(
     val isbn10: String,
     val isbn13: String
 )
+
