@@ -8,6 +8,12 @@ public class Apple {
     }
 
     public int weight() {
+        int a = 0;
+
+        for (int i = 0; i < 1_000; i += 1) {
+            a += i;
+        }
+
         return this.weight;
     }
 }
