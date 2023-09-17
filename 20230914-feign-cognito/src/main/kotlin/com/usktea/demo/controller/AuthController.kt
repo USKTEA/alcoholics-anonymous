@@ -1,72 +1,60 @@
 package com.usktea.demo.controller
 
-import com.usktea.demo.TokenDto
-import com.usktea.demo.feign.CognitoFeign
+import com.usktea.demo.adaptor.ClovaHomeNetAdaptor
+import com.usktea.demo.dtos.ClaimTokenRequest
+import com.usktea.demo.dtos.ClovaAuthorizationUrlRequest
+import com.usktea.demo.dtos.TokenDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("/auth")
-class AuthController(
-    private val cognitoFeign: CognitoFeign
+@RequestMapping("/clova")
+class ClovaAuthController(
+    private val clovaHomeNetAdaptor: ClovaHomeNetAdaptor,
 ) {
-    val cognitoDomain = "https://usktea1234.auth.ap-northeast-2.amazoncognito.com"
-    val clientId = "5cd6hh2ttlh6vqtfm19oj4m95i"
-    val clientSecret = "m6vjstgm4lqas56kqartq3u4id5ekmd2n99l89ku5f40p926jc4"
-    val redirectUri = "http://localhost:8080/auth/token"
 
-    @GetMapping("/login")
-    fun getLoginUrl(): ResponseEntity<Unit> {
-        val url = ""
+    @RequestMapping("/login")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun getLoginUrl(
+        @RequestParam("clientid") clientId: String,
+        @RequestParam("redirect_uri") redirectUri: String,
+        @RequestParam("response_type") responseType: String,
+        @RequestParam("scope") scope: String,
+        @RequestParam("state") state: String,
+    ): ResponseEntity<Unit> {
+        val url = clovaHomeNetAdaptor.getAuthorizationUrl(
+            ClovaAuthorizationUrlRequest.of(
+                clientId = clientId,
+                redirectUri = redirectUri,
+                responseType = responseType,
+                scope = scope,
+                state = state,
+            ),
+        )
 
         return ResponseEntity.status(HttpStatus.FOUND)
             .header(HttpHeaders.LOCATION, url)
             .build()
     }
 
-    @GetMapping("/token")
-    fun token(
-        @RequestParam code: String
+    @RequestMapping("/tokens")
+    @ResponseStatus(HttpStatus.OK)
+    fun requestToken(
+        @RequestParam("client_id") clientId: String,
+        @RequestParam("code") authorizationCode: String,
+        @RequestParam("grant_type") grantType: String,
+        @RequestParam("redirect_uri") redirectUri: String,
     ): TokenDto {
-        val encoded = Base64.getEncoder().encodeToString("$clientId:$clientSecret".toByteArray())
-        val token = cognitoFeign.getToken(
-            token = "Basic $encoded",
-            request = tokenRequest(code)
+        return clovaHomeNetAdaptor.getAccessToken(
+            ClaimTokenRequest.of(
+                clientId = clientId,
+                code = authorizationCode,
+                grantType = grantType,
+                redirectUri = redirectUri,
+            ),
         )
-
-        return token
-    }
-
-//    private fun tokenRequest(code: String): FormData {
-//        return FormData(
-//            grant_type = "authorization_code",
-//            client_id = clientId,
-//            code = code,
-//            redirect_uri = redirectUri
-//        )
-//    }
-
-    @GetMapping("/foo")
-    fun foo(): String {
-        return "foo"
-    }
-
-    private fun tokenRequest(code: String): Map<String, String> {
-        val formData = mutableMapOf<String, String>()
-
-        ////val formData = LinkedMultiValueMap<String, String>()
-
-        formData["grant_type"] = "authorization_code"
-        formData["client_id"] = clientId
-        formData["code"] = code
-        formData["redirect_uri"] = redirectUri
-
-        return formData
     }
 }
