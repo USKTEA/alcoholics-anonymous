@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/data/elastic
+    username: sa
+    password:
+  elasticsearch:
+    uris: localhost:9200
+    username: elastic
+    password: fcjlGuCMVEkQg-VQCsa6
+
+server:
+  port: 8000
