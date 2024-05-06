@@ -7,6 +7,7 @@ class WriterOnlyPost(
     title: String,
     content: String,
     authorName: String,
+    val poo: Int,
 ) : Post(title = title, content = content, authorName = authorName) {
     override fun authorize(member: Member): Boolean {
         return member.memberName == authorName

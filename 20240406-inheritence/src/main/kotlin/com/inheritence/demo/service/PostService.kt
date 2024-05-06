@@ -19,11 +19,11 @@ class PostService(
         )
 
         val writerOnly = WriterOnlyPost(
-            title = "writer", content = "writer", authorName = "abc"
+            title = "writer", content = "writer", authorName = "abc", poo = 1,
         )
 
         val manager = ManagerPost(
-            title = "manager", content = "manager", authorName = "abc"
+            title = "manager", content = "manager", authorName = "abc", password = "d"
         )
 
         postRepository.saveAll(listOf(normal, writerOnly, manager))
