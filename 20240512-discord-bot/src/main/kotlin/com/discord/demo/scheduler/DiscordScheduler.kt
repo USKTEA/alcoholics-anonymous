@@ -18,7 +18,7 @@ class DiscordScheduler(
 
     @Scheduled(cron = "0 30 19 * * *", zone = "Asia/Seoul")
     fun sendMessage() {
-        val dayOfWeek = LocalDate.now(ZoneId.of("Asia/Seoul")).dayOfWeek.plus(1)
+        val dayOfWeek = LocalDate.now(ZoneId.of("Asia/Seoul")).dayOfWeek
 
         if (isWeekend(dayOfWeek)) {
             return
