@@ -1,6 +1,7 @@
 package com.discord.demo.scheduler
 
 import com.discord.demo.builder.MessageBuilderFactory
+import com.discord.demo.logging.logger
 import com.discord.demo.model.DiscordMessage
 import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Scheduled
@@ -32,9 +33,13 @@ class DiscordScheduler(
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(DiscordMessage.from(message))
                 .retrieve()
-        } finally {
-            println("success")
+        } catch (exception: Exception) {
+            logger.error("Send Message Error", exception)
+
+            throw exception
         }
+
+        logger.info("Send Message Success")
     }
 
     private fun isWeekend(dayOfWeek: DayOfWeek): Boolean {
