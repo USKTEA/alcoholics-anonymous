@@ -27,15 +27,4 @@ class WebConfig {
 
         return http.build()
     }
-
-    @Bean
-    fun userDetailService(): UserDetailsService {
-        val user = User.builder()
-            .username("user")
-            .password("{noop}1111")
-            .roles("USER")
-            .build()
-
-        return InMemoryUserDetailsManager(user)
-    }
 }
