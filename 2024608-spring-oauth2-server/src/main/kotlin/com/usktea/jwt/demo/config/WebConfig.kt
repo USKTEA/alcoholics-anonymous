@@ -1,5 +1,6 @@
 package com.usktea.jwt.demo.config
 
+import org.apache.catalina.webresources.TomcatURLStreamHandlerFactory.disable
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -20,9 +21,9 @@ class WebConfig {
             auth.requestMatchers("/sessions").permitAll()
             auth.anyRequest().authenticated()
         }
-            .cors { cors -> cors.disable() }
-            .csrf { csrf -> csrf.disable() }
-            .formLogin { form -> form.disable() }
+            .cors { disable() }
+            .csrf { disable() }
+            .formLogin { disable() }
             .addFilterBefore(
                 authenticationFilter(authenticationManager),
                 UsernamePasswordAuthenticationFilter::class.java
@@ -31,14 +32,13 @@ class WebConfig {
         return http.build()
     }
 
-
     @Bean
     fun authenticationFilter(authenticationManager: AuthenticationManager): JwtAuthenticateFilter {
         return JwtAuthenticateFilter(authenticationManager)
     }
 
     @Bean
-    fun customAuthenticationManager(http: HttpSecurity): AuthenticationManager {
+    fun authenticationManager(http: HttpSecurity): AuthenticationManager {
         val manager = http.getSharedObject(AuthenticationManagerBuilder::class.java)
 
         return manager.build()
