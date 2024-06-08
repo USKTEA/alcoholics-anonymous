@@ -6,7 +6,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @Configuration
 @EnableRedisRepositories(
-    enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP,
-    shadowCopy = RedisKeyValueAdapter.ShadowCopy.OFF
+//    enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP,
+//    shadowCopy = RedisKeyValueAdapter.ShadowCopy.OFF
 )
 class RedisConfig

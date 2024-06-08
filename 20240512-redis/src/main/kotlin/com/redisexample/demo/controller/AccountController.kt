@@ -2,11 +2,7 @@ package com.redisexample.demo.controller
 
 import com.redisexample.demo.model.Account
 import com.redisexample.demo.repository.AccountRepository
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -17,27 +13,44 @@ class AccountController(
 
     @GetMapping
     fun countAccounts(): Long {
-        return accountRepository.count()
+        val before = System.currentTimeMillis()
+
+        accountRepository.count()
+
+        val after = System.currentTimeMillis()
+
+        return after - before
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/{id}")
     fun getAccount(
-        @PathVariable name: String
+        @PathVariable id: String
     ): Account {
-        return accountRepository.findByName(name).orElseThrow()
+        return accountRepository.findById(id).orElseThrow()
     }
 
-    @PostMapping("/{name}")
-    fun createAccount(
-        @PathVariable name: String
-    ): Account {
-        val count = accountRepository.count()
+    @PostMapping
+    fun createAccount(): Long {
+        val before = System.currentTimeMillis()
 
-        return accountRepository.save(
-            Account(
-                id = count,
-                name = name,
+        val result = accountRepository.save(Account(name = "wowwow"))
+
+        val after = System.currentTimeMillis()
+
+        return after - before
+    }
+
+    @PostMapping("/bulk")
+    fun createAccountBulk(): String {
+
+        for (i: Int in 0..6200000) {
+            accountRepository.save(
+                Account(
+                    name = "channel-post-create-player-$i-null-someId"
+                )
             )
-        )
+        }
+
+        return "ok"
     }
 }
