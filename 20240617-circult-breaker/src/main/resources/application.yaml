@@ -1,0 +1,17 @@
+resilience4j:
+  circuitbreaker:
+    failure-rate-threshold: 20
+    slow-call-duration-threshold: 500
+    slow-call-rate-threshold: 10
+    wait-duration-in-open-state: 10000
+    minimum-number-of-calls: 20
+    sliding-window-size: 20
+    permitted-number-of-calls-in-half-open-state: 3
+    configs:
+      default:
+        registerHealthIndicator: true
+
+management.endpoints.web.base-path: /api/actuator
+management.endpoint.health.show-details: always
+management.health.circuitbreakers.enabled: true
+
