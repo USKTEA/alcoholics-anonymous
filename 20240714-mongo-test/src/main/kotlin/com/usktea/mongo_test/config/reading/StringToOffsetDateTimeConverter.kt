@@ -1,6 +1,6 @@
-package com.htbeyond.library.mongodb.converter.reading
+package com.usktea.mongo_test.config.reading
 
-import com.htbeyond.library.mongodb.converter.CustomMongoConverter
+import com.usktea.mongo_test.config.CustomMongoConverter
 import org.springframework.data.convert.ReadingConverter
 import java.time.OffsetDateTime
 

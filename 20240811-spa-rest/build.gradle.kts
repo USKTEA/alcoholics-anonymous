@@ -54,6 +54,8 @@ tasks.withType<Test> {
 tasks.register<com.github.gradle.node.npm.task.NpmTask>("buildReact") {
 	dependsOn(tasks.npmInstall)
 	npmCommand.set(listOf("run", "build"))
+	group = "frontend"
+	description = "Build the React application"
 	// The workingDir is set from the node extension above
 }
 
@@ -61,6 +63,8 @@ tasks.register<Copy>("copyReactBuild") {
 	dependsOn("buildReact")
 	from("${project.projectDir}/frontend/build")
 	into("${project.projectDir}/src/main/resources/static")
+	group = "frontend"
+	description = "Copy React build output to Spring Boot static resources folder"
 }
 
 tasks.named("processResources") {

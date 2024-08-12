@@ -1,6 +1,6 @@
-package com.htbeyond.library.mongodb.converter.writing
+package com.usktea.mongo_test.config.writing
 
-import com.htbeyond.library.mongodb.converter.CustomMongoConverter
+import com.usktea.mongo_test.config.CustomMongoConverter
 import org.springframework.data.convert.WritingConverter
 import java.time.OffsetTime
 
